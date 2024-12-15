@@ -1,0 +1,64 @@
+# Ignore operating system files
+.DS_Store
+Thumbs.db
+._*
+.fuse_hidden*
+.Spotlight-V100
+.Trashes
+
+# Ignore IDE files
+.vscode/
+.idea/
+.eclipse/
+*.sublime-workspace
+*.sublime-project
+.atom/
+
+# Ignore build and compilation files
+node_modules/
+dist/
+build/
+target/
+.next/
+.nuxt/
+out/
+
+# Ignore logs and debugging files
+logs/
+debug.log
+error.log
+*.log
+*.cache
+*.pid
+
+# Ignore configuration and settings files
+config.json
+settings.json
+.env
+.env.*
+
+# Ignore binary files
+*.exe
+*.dll
+*.so
+
+# Ignore backup files
+*.bak
+*.tmp
+core
+
+# Ignore yarn, npm, pnpm lockfiles
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+
+# Ignore Docker-related files
+docker-compose.override.yml
+
+# Ignore CI/CD and GitHub Actions files
+.github/workflows/
+
+# Ignore test coverage files
+coverage/
+junit.xml
+test-results.xml
