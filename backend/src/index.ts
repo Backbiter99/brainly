@@ -1,10 +1,13 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { string, z } from "zod";
-import { User } from "./db";
+import { Content, User } from "./db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import dotenv from "dotenv";
+import { userMiddleware } from "./middleware";
+import { CustomRequest } from "./types";
+import mongoose from "mongoose";
 dotenv.config();
 
 const port = 3000;
@@ -23,14 +26,13 @@ const signupInput = z.object({
     ),
 });
 
-//@ts-ignore
-app.post("/api/v1/signup", async (req, res) => {
+app.post("/api/v1/signup", async (req: Request, res: Response) => {
   const parsedSignupInput = signupInput.safeParse(req.body);
   if (!parsedSignupInput.success) {
-    return res.status(411).json({ error: "error in inputs" });
+    res.status(411).json({ error: "error in inputs" });
+    return;
   }
-  const username = req.body.username;
-  const password = req.body.password;
+  const { username, password } = parsedSignupInput.data;
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -43,28 +45,36 @@ app.post("/api/v1/signup", async (req, res) => {
   } catch (error) {
     console.error("Error during signup: ", error);
 
-    return res.status(403).json({ error: "user already exists" });
+    res.status(403).json({ error: "user already exists" });
   }
 });
 
-// @ts-ignore
 app.post("/api/v1/signin", async (req, res) => {
   const parsedSigninInput = signupInput.safeParse(req.body);
   if (!parsedSigninInput.success) {
-    return res.status(403).json({
+    res.status(403).json({
       message: "wrong username or password",
     });
+    return;
   }
   try {
-    const username = req.body.username;
-    const password = req.body.password;
+    const { username, password } = parsedSigninInput.data;
 
     const user = await User.findOne({
       username,
     });
 
-    //@ts-ignore
+    if (!user) {
+      console.log("user is null");
+
+      res.status(403).json({
+        message: "incorrect credentials",
+      });
+      return;
+    }
+
     const hashedPassword = user.password;
+
     const check = await bcrypt.compare(password, hashedPassword);
 
     if (check && user) {
@@ -79,13 +89,52 @@ app.post("/api/v1/signin", async (req, res) => {
     }
   } catch (error) {
     console.error("Error while signin: ", error);
-    return res.status(500).json({ error: "internal serval error" });
+    res.status(500).json({ error: "internal serval error" });
   }
 });
 
-app.post("/api/v1/content", (req, res) => {});
-app.get("/api/v1/content", (req, res) => {});
-app.delete("/api/v1/content", (req, res) => {});
+app.post("/api/v1/content", userMiddleware, async (req: CustomRequest, res) => {
+  const link = req.body.link;
+  const type = req.body.type;
+
+  await Content.create({
+    link,
+    type,
+    userId: req.userId,
+    tags: [],
+  });
+
+  res.json({
+    message: "content added",
+  });
+});
+
+app.get("/api/v1/content", userMiddleware, async (req: CustomRequest, res) => {
+  const userId = req.userId;
+  const content = await Content.find({
+    userId: userId,
+  }).populate("userId", "username");
+
+  res.json({ content });
+});
+
+app.delete(
+  "/api/v1/content",
+  userMiddleware,
+  async (req: CustomRequest, res) => {
+    const contentId = req.body.contentId;
+
+    await Content.deleteMany({
+      _id: new mongoose.Types.ObjectId(contentId),
+      userId: req.userId,
+    });
+
+    res.json({
+      message: "Content Deleted",
+    });
+  }
+);
+
 app.post("/api/v1/brain/share", (req, res) => {});
 app.get("/api/v1/brain/:shareLink", (req, res) => {});
 
