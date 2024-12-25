@@ -47,11 +47,6 @@ settings.json
 *.tmp
 core
 
-# Ignore yarn, npm, pnpm lockfiles
-yarn.lock
-package-lock.json
-pnpm-lock.yaml
-
 # Ignore Docker-related files
 docker-compose.override.yml
 
