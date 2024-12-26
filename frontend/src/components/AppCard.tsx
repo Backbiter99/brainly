@@ -23,7 +23,7 @@ interface AppcardProps {
 export const Appcard = ({ icon, title, content, footer }: AppcardProps) => {
     const checkIcon = () => {
         if (icon === "tweet") {
-            return <Twitter size={20} />;
+            return <Twitter size={20} className="text-primary" />;
         } else if (icon === "video") {
             return <VideoIcon size={20} />;
         } else {

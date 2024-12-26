@@ -1,30 +1,18 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { ThemeProvider } from "./components/ThemeProvider";
-import { Appbar } from "./components/Appbar";
-import { SidebarProvider } from "./components/ui/sidebar";
-import { AppSidebar } from "./components/app-sidebar";
-import { Appcard } from "./components/AppCard";
+import { Signin } from "./pages/Signin";
+import { Signup } from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
     return (
-        <ThemeProvider>
-            <SidebarProvider>
-                <AppSidebar />
-                <div className="w-full p-2">
-                    <div className="my-3">
-                        <Appbar />
-                    </div>
-                    <main className="mt-9">
-                        <Appcard
-                            icon="tweet"
-                            title="Hi"
-                            content="hi"
-                            footer="hi"
-                        />
-                    </main>
-                </div>
-            </SidebarProvider>
-        </ThemeProvider>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
