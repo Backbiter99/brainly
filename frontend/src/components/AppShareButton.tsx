@@ -1,4 +1,4 @@
-import { Copy, Share2Icon } from "lucide-react";
+import { Share2Icon } from "lucide-react";
 import { Button } from "./ui/button";
 
 import {
@@ -11,10 +11,35 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import axios from "axios";
+import { backend_url } from "@/config";
 
 export const AppShareButton = () => {
+    async function handleClick(shareValue: boolean) {
+        try {
+            const response = await axios.post(
+                `${backend_url}/api/v1/brain/share`,
+                { share: shareValue.toString() },
+                {
+                    headers: {
+                        Authorization: localStorage.getItem("token"),
+                    },
+                }
+            );
+            if (shareValue) {
+                const rootUrl = window.location.origin;
+                const midUrl = "/api/v1/brain/";
+                alert(
+                    `Sharable link: ${rootUrl}${midUrl}${response.data.link}`
+                );
+            } else {
+                alert(`${response.data.message}`);
+            }
+        } catch (error) {
+            console.error("Error: ", error);
+        }
+    }
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -33,24 +58,24 @@ export const AppShareButton = () => {
                     </DialogDescription>
                 </DialogHeader>
                 <div className="flex items-center space-x-2">
-                    <div className="grid flex-1 gap-2">
-                        <Label htmlFor="link" className="sr-only">
-                            Link
-                        </Label>
-                        <Input
-                            id="link"
-                            defaultValue="https://ui.shadcn.com/docs/installation"
-                            readOnly
-                        />
-                    </div>
-                    <Button type="submit" size="sm" className="px-3">
-                        <span className="sr-only">Copy</span>
-                        <Copy />
+                    <Button
+                        onClick={() => handleClick(true)}
+                        className="w-full"
+                    >
+                        Share
+                    </Button>
+                    <Button
+                        onClick={() => handleClick(false)}
+                        className="w-full"
+                    >
+                        Do not Share
                     </Button>
                 </div>
                 <DialogFooter className="sm:justify-start">
                     <DialogClose asChild>
-                        <Button type="button">Close</Button>
+                        <Button className="w-full" type="button">
+                            Close
+                        </Button>
                     </DialogClose>
                 </DialogFooter>
             </DialogContent>
