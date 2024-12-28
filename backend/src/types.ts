@@ -6,6 +6,7 @@ export interface CustomRequest extends Request {
     body: {
         link?: string;
         type?: string;
+        title?: string;
         contentId?: string;
         share?: string;
     };

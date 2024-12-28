@@ -18,7 +18,10 @@ export const AppShareButton = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="secondary">
+                <Button
+                    className="h-8 px-1 text-xs md:h-10 md:px-4 md:text-base"
+                    variant="secondary"
+                >
                     <Share2Icon /> Share Brain
                 </Button>
             </DialogTrigger>

@@ -3,6 +3,7 @@ import { string, z } from "zod";
 import { Content, Link, User } from "./db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import cors from "cors";
 
 import dotenv from "dotenv";
 import { userMiddleware } from "./middleware";
@@ -15,6 +16,7 @@ const port = 3000;
 const app = express();
 
 app.use(express.json());
+app.use(cors({ origin: "*" }));
 
 const signupInput = z.object({
     username: string().min(3).max(10),
@@ -31,12 +33,17 @@ app.post("/api/v1/signup", async (req: Request, res: Response) => {
     const parsedSignupInput = signupInput.safeParse(req.body);
     if (!parsedSignupInput.success) {
         res.status(411).json({ error: "error in inputs" });
+        console.log("Error in Inputs");
         return;
     }
     const { username, password } = parsedSignupInput.data;
 
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const salt_rounds = parseInt(
+            process.env.BCRYPT_SALT_ROUNDS || "10",
+            10
+        );
+        const hashedPassword = await bcrypt.hash(password, salt_rounds);
         await User.create({
             username: username,
             password: hashedPassword,
@@ -104,6 +111,7 @@ app.post("/api/v1/content", userMiddleware, async (req: CustomRequest, res) => {
     await Content.create({
         link,
         type,
+        title: req.body.title,
         userId: req.userId,
         tags: [],
     });

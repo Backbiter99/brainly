@@ -2,16 +2,49 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { backend_url } from "@/config";
+import axios, { isAxiosError } from "axios";
 import { BrainIcon, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
 
-    function buttonLoading() {
-        setTimeout(() => {
-            setIsLoading(true);
-        }, 100);
+    async function buttonLoading() {
+        setIsLoading(true);
+
+        const username = usernameRef.current?.value;
+        const password = passwordRef.current?.value;
+
+        try {
+            const res = await axios.post(`${backend_url}/api/v1/signup`, {
+                username,
+                password,
+            });
+
+            if (res.status === 200) {
+                navigate("/dashboard");
+            } else if (res.status === 411) {
+                alert(
+                    "Username must be between 3-10 characters and Password must be between 8-20 characters containing at least one uppercase letter, one lowercase letter, one number, and one special character."
+                );
+            }
+        } catch (error) {
+            if (isAxiosError(error) && error.response?.status === 411) {
+                alert(
+                    "Username must be between 3-10 characters and Password must be between 8-20 characters containing at least one uppercase letter, one lowercase letter, one number, and one special character."
+                );
+            } else {
+                alert("An error occurred during signup. Please try again.");
+                console.error("Error:", error);
+            }
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -31,10 +64,14 @@ export const Signup = () => {
                                 <Input
                                     className="bg-sidebar"
                                     placeholder="Username"
+                                    ref={usernameRef}
                                 />
+
                                 <Input
                                     className="bg-sidebar"
                                     placeholder="Password"
+                                    ref={passwordRef}
+                                    type="password"
                                 />
                                 <div className="flex justify-center">
                                     <Button

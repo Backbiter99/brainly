@@ -1,10 +1,8 @@
 import {
     BrainIcon,
-    HashIcon,
-    Link2Icon,
-    NotepadText,
+    FileTextIcon,
     TwitterIcon,
-    Video,
+    YoutubeIcon,
 } from "lucide-react";
 
 import {
@@ -24,26 +22,19 @@ const items = [
         title: "Tweets",
         url: "#",
         icon: TwitterIcon,
+        color: "#5147e5",
     },
     {
         title: "Videos",
         url: "#",
-        icon: Video,
+        icon: YoutubeIcon,
+        color: "#f23131",
     },
     {
         title: "Documents",
         url: "#",
-        icon: NotepadText,
-    },
-    {
-        title: "Links",
-        url: "#",
-        icon: Link2Icon,
-    },
-    {
-        title: "Tags",
-        url: "#",
-        icon: HashIcon,
+        icon: FileTextIcon,
+        color: "#554cd9",
     },
 ];
 
@@ -61,7 +52,7 @@ export function AppSidebar() {
                         </div>
                     </SidebarGroupLabel>
                     <SidebarGroupContent className="my-3">
-                        <SidebarMenu>
+                        <SidebarMenu className="mt-10">
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton
@@ -69,7 +60,7 @@ export function AppSidebar() {
                                         className="text-sidebar-accent-foreground"
                                     >
                                         <a href={item.url}>
-                                            <item.icon />
+                                            <item.icon color={item.color} />
                                             <span>{item.title}</span>
                                         </a>
                                     </SidebarMenuButton>
