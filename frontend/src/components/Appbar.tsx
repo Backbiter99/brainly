@@ -1,6 +1,7 @@
 import { ModeToggle } from "./ModeToggle";
 import { AppContentButton } from "./AppContentButton";
 import { AppShareButton } from "./AppShareButton";
+import { AppLogoutButton } from "./AppLogoutButton";
 
 export const Appbar = () => {
     return (
@@ -9,10 +10,11 @@ export const Appbar = () => {
                 All Notes
             </div>
             <div className="flex items-center">
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 sm:flex-wrap">
                     <AppShareButton />
                     <AppContentButton />
                     <ModeToggle />
+                    <AppLogoutButton />
                 </div>
             </div>
         </div>

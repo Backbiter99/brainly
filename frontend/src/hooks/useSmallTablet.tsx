@@ -1,8 +1,8 @@
 import * as React from "react";
 
-const MOBILE_BREAKPOINT = 768;
+const MOBILE_BREAKPOINT = 925;
 
-export function useIsMobile() {
+export function useIsSmallTablet() {
     const [isMobile, setIsMobile] = React.useState<boolean | undefined>(
         undefined
     );

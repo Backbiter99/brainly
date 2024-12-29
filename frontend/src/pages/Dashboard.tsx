@@ -5,6 +5,10 @@ import { AppSidebar } from "../components/app-sidebar";
 import { Appcard } from "../components/AppCard";
 import { useAllContent } from "@/hooks/useAllContent";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsTablet } from "@/hooks/useTablet";
+import { useIsSmallTablet } from "@/hooks/useSmallTablet";
+import { useNavigate } from "react-router-dom";
+import { useCheckLogin } from "@/hooks/useCheckLogin";
 
 interface contentsProps {
     _id: string;
@@ -18,10 +22,60 @@ function Dashboard() {
 
     function checkIsMobile() {
         const isMobile = useIsMobile();
+        const isSmallTablet = useIsSmallTablet();
+        const isBigTablet = useIsTablet();
 
         if (isMobile) {
             return (
-                <div className="grid grid-cols-1 w-full h-full overflow-y-scroll">
+                <div className="grid grid-cols-1 w-full h-full justify-items-center overflow-y-scroll">
+                    <Appcard
+                        title="How to Use the Website"
+                        content="https://docs.google.com/document/d/e/2PACX-1vQd_ZWDs1RsFNYyViLAXxHTtLIHlW3_TUys0HgDt5GCIkpqIGNFZ5CP8KreL01HYY3DKLoDOT04vxOJ/pub?embedded=true"
+                        icon="Document"
+                        id="0"
+                    />
+                    {contents.length > 0 ? (
+                        contents.map(({ title, link, type, _id }, index) => (
+                            <Appcard
+                                key={index}
+                                id={_id}
+                                icon={type}
+                                title={title}
+                                content={link}
+                            />
+                        ))
+                    ) : (
+                        <p>No content available</p>
+                    )}
+                </div>
+            );
+        } else if (isSmallTablet) {
+            return (
+                <div className="grid grid-cols-1 w-full h-full justify-items-center overflow-y-scroll">
+                    <Appcard
+                        title="How to Use the Website"
+                        content="https://docs.google.com/document/d/e/2PACX-1vQd_ZWDs1RsFNYyViLAXxHTtLIHlW3_TUys0HgDt5GCIkpqIGNFZ5CP8KreL01HYY3DKLoDOT04vxOJ/pub?embedded=true"
+                        icon="Document"
+                        id="0"
+                    />
+                    {contents.length > 0 ? (
+                        contents.map(({ title, link, type, _id }, index) => (
+                            <Appcard
+                                key={index}
+                                id={_id}
+                                icon={type}
+                                title={title}
+                                content={link}
+                            />
+                        ))
+                    ) : (
+                        <p>No content available</p>
+                    )}
+                </div>
+            );
+        } else if (isBigTablet) {
+            return (
+                <div className="grid grid-cols-2 w-full h-full justify-items-center overflow-y-scroll">
                     <Appcard
                         title="How to Use the Website"
                         content="https://docs.google.com/document/d/e/2PACX-1vQd_ZWDs1RsFNYyViLAXxHTtLIHlW3_TUys0HgDt5GCIkpqIGNFZ5CP8KreL01HYY3DKLoDOT04vxOJ/pub?embedded=true"
@@ -45,7 +99,7 @@ function Dashboard() {
             );
         } else {
             return (
-                <div className="grid grid-cols-3 w-full">
+                <div className="grid grid-cols-3 w-full justify-items-center">
                     <Appcard
                         title="How to Use the Website"
                         content="https://docs.google.com/document/d/e/2PACX-1vQd_ZWDs1RsFNYyViLAXxHTtLIHlW3_TUys0HgDt5GCIkpqIGNFZ5CP8KreL01HYY3DKLoDOT04vxOJ/pub?embedded=true"
@@ -78,7 +132,7 @@ function Dashboard() {
                     <div className="my-3">
                         <Appbar />
                     </div>
-                    <main className="mt-10 w-full mx-4">{checkIsMobile()}</main>
+                    <main className=" w-full mt-10">{checkIsMobile()}</main>
                 </div>
             </SidebarProvider>
         </ThemeProvider>
