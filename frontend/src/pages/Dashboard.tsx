@@ -7,8 +7,6 @@ import { useAllContent } from "@/hooks/useAllContent";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useIsTablet } from "@/hooks/useTablet";
 import { useIsSmallTablet } from "@/hooks/useSmallTablet";
-import { useNavigate } from "react-router-dom";
-import { useCheckLogin } from "@/hooks/useCheckLogin";
 
 interface contentsProps {
     _id: string;
