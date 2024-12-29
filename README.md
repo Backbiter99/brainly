@@ -1,6 +1,6 @@
-# Brainly Clone
+# Second Brain
 
-Brainly Clone is a full-stack web application. The project is built using modern technologies for both the frontend and backend.
+Second Brain is a full-stack web application. The project is built using modern technologies for both the frontend and backend.
 
 ## Project Structure
 
