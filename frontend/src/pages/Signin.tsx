@@ -19,6 +19,7 @@ export const Signin = () => {
 
         const username = usernameRef.current?.value;
         const password = passwordRef.current?.value;
+        const navigate = useNavigate();
 
         try {
             const res = await axios.post(`${backend_url}/api/v1/signin`, {
@@ -88,6 +89,17 @@ export const Signin = () => {
                                             "Signin"
                                         )}
                                     </Button>
+                                </div>
+                                <div className="text-primary text-sm mt-1 flex flex-col items-center justify-center">
+                                    Don't have an account?{" "}
+                                    <span
+                                        className="cursor-pointer underline"
+                                        onClick={() => {
+                                            navigate("/signup");
+                                        }}
+                                    >
+                                        Signup
+                                    </span>
                                 </div>
                             </div>
                         </div>

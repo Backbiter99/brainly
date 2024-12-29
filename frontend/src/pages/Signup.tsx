@@ -88,6 +88,17 @@ export const Signup = () => {
                                         )}
                                     </Button>
                                 </div>
+                                <div className="text-primary text-sm mt-1 w-full flex flex-col justify-center items-center">
+                                    Already have an account?{" "}
+                                    <span
+                                        className="cursor-pointer underline"
+                                        onClick={() => {
+                                            navigate("/signin");
+                                        }}
+                                    >
+                                        Signin
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
