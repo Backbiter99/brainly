@@ -19,7 +19,6 @@ export const Signin = () => {
 
         const username = usernameRef.current?.value;
         const password = passwordRef.current?.value;
-        const navigate = useNavigate();
 
         try {
             const res = await axios.post(`${backend_url}/api/v1/signin`, {
