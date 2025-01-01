@@ -28,7 +28,7 @@ export const AppShareButton = () => {
             );
             if (shareValue) {
                 const rootUrl = window.location.origin;
-                const midUrl = "/api/v1/brain/";
+                const midUrl = "/brain/";
                 alert(
                     `Sharable link: ${rootUrl}${midUrl}${response.data.link}`
                 );

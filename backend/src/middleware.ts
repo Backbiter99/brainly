@@ -6,29 +6,29 @@ import { CustomRequest } from "./types";
 dotenv.config();
 
 interface DecodedToken {
-  id: string;
+    id: string;
 }
 
 export const userMiddleware = (
-  req: CustomRequest,
-  res: Response,
-  next: NextFunction
+    req: CustomRequest,
+    res: Response,
+    next: NextFunction
 ) => {
-  try {
-    const header = req.headers["authorization"];
-    const jwt_secret = process.env.JWT_Password;
+    try {
+        const header = req.headers["authorization"];
+        const jwt_secret = process.env.JWT_Password;
 
-    if (!header || !jwt_secret) {
-      res.status(403).json({ error: "Not Authorized" });
-      return;
+        if (!header || !jwt_secret) {
+            res.status(403).json({ error: "header or jwt_secret missing" });
+            return;
+        }
+        const decoded = jwt.verify(header, jwt_secret) as DecodedToken;
+        console.log("successfully decoded");
+        req.userId = decoded.id;
+        next();
+    } catch (error) {
+        console.error("Invalid token: ", error);
+        res.status(403).json({ error: "Not Authorized" });
+        return;
     }
-    const decoded = jwt.verify(header, jwt_secret) as DecodedToken;
-    console.log("successfully decoded");
-    req.userId = decoded.id;
-    next();
-  } catch (error) {
-    console.error("Invalid token: ", error);
-    res.status(403).json({ error: "Not Authorized" });
-    return;
-  }
 };

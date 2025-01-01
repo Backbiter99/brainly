@@ -51,7 +51,7 @@ Ensure the following environment variables are set in your `.env` files:
 
 ```
 DATABASE_URL=<Your MongoDB connection URL>
-JWT_PASSWORD=<Your JWT secret key>
+JWT_Password=<Your JWT secret key>
 BCRYPT_SALT_ROUNDS=<Number of salt rounds for bcrypt>
 ```
 
