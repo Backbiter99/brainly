@@ -17,22 +17,22 @@ interface contentsProps {
     type: string;
 }
 
-function Dashboard() {
+function Video() {
     const contents: contentsProps[] = useAllContent();
     const [isCopyToClipboard, setIsCopyToClipboard] = useState(false);
 
     function handleIsCopied(value: boolean) {
-        if (value == true) {
-            setIsCopyToClipboard(true);
-        } else {
-            setIsCopyToClipboard(false);
-        }
+        setIsCopyToClipboard(value);
     }
 
     function checkIsMobile() {
         const isMobile = useIsMobile();
         const isSmallTablet = useIsSmallTablet();
         const isBigTablet = useIsTablet();
+
+        const filteredContents = contents.filter(
+            ({ type }) => type === "Video"
+        );
 
         if (isMobile) {
             return (
@@ -42,23 +42,21 @@ function Dashboard() {
                         content="https://docs.google.com/document/d/e/2PACX-1vQd_ZWDs1RsFNYyViLAXxHTtLIHlW3_TUys0HgDt5GCIkpqIGNFZ5CP8KreL01HYY3DKLoDOT04vxOJ/pub?embedded=true"
                         icon="Document"
                         id="0"
-                        isCopied={(value) => {
-                            handleIsCopied(value);
-                        }}
+                        isCopied={handleIsCopied}
                     />
-                    {contents.length > 0 ? (
-                        contents.map(({ title, link, type, _id }, index) => (
-                            <Appcard
-                                key={index}
-                                id={_id}
-                                icon={type}
-                                title={title}
-                                content={link}
-                                isCopied={(value) => {
-                                    handleIsCopied(value);
-                                }}
-                            />
-                        ))
+                    {filteredContents.length > 0 ? (
+                        filteredContents.map(
+                            ({ title, link, type, _id }, index) => (
+                                <Appcard
+                                    key={index}
+                                    id={_id}
+                                    icon={type}
+                                    title={title}
+                                    content={link}
+                                    isCopied={handleIsCopied}
+                                />
+                            )
+                        )
                     ) : (
                         <p>No content available</p>
                     )}
@@ -72,23 +70,21 @@ function Dashboard() {
                         content="https://docs.google.com/document/d/e/2PACX-1vQd_ZWDs1RsFNYyViLAXxHTtLIHlW3_TUys0HgDt5GCIkpqIGNFZ5CP8KreL01HYY3DKLoDOT04vxOJ/pub?embedded=true"
                         icon="Document"
                         id="0"
-                        isCopied={(value) => {
-                            handleIsCopied(value);
-                        }}
+                        isCopied={handleIsCopied}
                     />
-                    {contents.length > 0 ? (
-                        contents.map(({ title, link, type, _id }, index) => (
-                            <Appcard
-                                key={index}
-                                id={_id}
-                                icon={type}
-                                title={title}
-                                content={link}
-                                isCopied={(value) => {
-                                    handleIsCopied(value);
-                                }}
-                            />
-                        ))
+                    {filteredContents.length > 0 ? (
+                        filteredContents.map(
+                            ({ title, link, type, _id }, index) => (
+                                <Appcard
+                                    key={index}
+                                    id={_id}
+                                    icon={type}
+                                    title={title}
+                                    content={link}
+                                    isCopied={handleIsCopied}
+                                />
+                            )
+                        )
                     ) : (
                         <p>No content available</p>
                     )}
@@ -102,23 +98,21 @@ function Dashboard() {
                         content="https://docs.google.com/document/d/e/2PACX-1vQd_ZWDs1RsFNYyViLAXxHTtLIHlW3_TUys0HgDt5GCIkpqIGNFZ5CP8KreL01HYY3DKLoDOT04vxOJ/pub?embedded=true"
                         icon="Document"
                         id="0"
-                        isCopied={(value) => {
-                            handleIsCopied(value);
-                        }}
+                        isCopied={handleIsCopied}
                     />
-                    {contents.length > 0 ? (
-                        contents.map(({ title, link, type, _id }, index) => (
-                            <Appcard
-                                key={index}
-                                id={_id}
-                                icon={type}
-                                title={title}
-                                content={link}
-                                isCopied={(value) => {
-                                    handleIsCopied(value);
-                                }}
-                            />
-                        ))
+                    {filteredContents.length > 0 ? (
+                        filteredContents.map(
+                            ({ title, link, type, _id }, index) => (
+                                <Appcard
+                                    key={index}
+                                    id={_id}
+                                    icon={type}
+                                    title={title}
+                                    content={link}
+                                    isCopied={handleIsCopied}
+                                />
+                            )
+                        )
                     ) : (
                         <p>No content available</p>
                     )}
@@ -132,23 +126,21 @@ function Dashboard() {
                         content="https://docs.google.com/document/d/e/2PACX-1vQd_ZWDs1RsFNYyViLAXxHTtLIHlW3_TUys0HgDt5GCIkpqIGNFZ5CP8KreL01HYY3DKLoDOT04vxOJ/pub?embedded=true"
                         icon="Document"
                         id="0"
-                        isCopied={(value) => {
-                            handleIsCopied(value);
-                        }}
+                        isCopied={handleIsCopied}
                     />
-                    {contents.length > 0 ? (
-                        contents.map(({ title, link, type, _id }, index) => (
-                            <Appcard
-                                key={index}
-                                id={_id}
-                                icon={type}
-                                title={title}
-                                content={link}
-                                isCopied={(value) => {
-                                    handleIsCopied(value);
-                                }}
-                            />
-                        ))
+                    {filteredContents.length > 0 ? (
+                        filteredContents.map(
+                            ({ title, link, type, _id }, index) => (
+                                <Appcard
+                                    key={index}
+                                    id={_id}
+                                    icon={type}
+                                    title={title}
+                                    content={link}
+                                    isCopied={handleIsCopied}
+                                />
+                            )
+                        )
                     ) : (
                         <p>No content available</p>
                     )}
@@ -163,9 +155,9 @@ function Dashboard() {
                 <AppSidebar />
                 <div className="w-full p-2 h-full">
                     <div className="my-3">
-                        <Appbar />
+                        <Appbar title="Videos" />
                     </div>
-                    <main className=" w-full mt-10">{checkIsMobile()}</main>
+                    <main className="w-full mt-10">{checkIsMobile()}</main>
                     {isCopyToClipboard && <AlertCopyClipboard />}
                 </div>
             </SidebarProvider>
@@ -173,4 +165,4 @@ function Dashboard() {
     );
 }
 
-export default Dashboard;
+export default Video;

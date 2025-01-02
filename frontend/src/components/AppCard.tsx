@@ -9,11 +9,32 @@ interface AppcardProps {
     title: string;
     content: string;
     id: string;
+    isCopied?: (value: boolean) => void;
 }
 
-export const Appcard = ({ icon, title, content, id }: AppcardProps) => {
+export const Appcard = ({
+    icon,
+    title,
+    content,
+    id,
+    isCopied,
+}: AppcardProps) => {
     function handleClickIcon() {
         window.open(content, "_blank");
+    }
+
+    function handleShare() {
+        navigator.clipboard
+            .writeText(content)
+            .then(() => {
+                isCopied?.(true);
+                setTimeout(() => {
+                    isCopied?.(false);
+                }, 2000);
+            })
+            .catch((error) => {
+                console.error("Error: ", error);
+            });
     }
 
     function handleDelete() {
@@ -99,7 +120,12 @@ export const Appcard = ({ icon, title, content, id }: AppcardProps) => {
                             </div>
                         </div>
                         <div className="flex items-center gap-3 text-sidebar-foreground">
-                            <Share2Icon size={20} color="#5147e5" />
+                            <Share2Icon
+                                className="cursor-pointer"
+                                size={20}
+                                color="#5147e5"
+                                onClick={handleShare}
+                            />
                             <span
                                 onClick={handleDelete}
                                 className="cursor-pointer"
